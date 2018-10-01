@@ -42,3 +42,10 @@ resource "cloudflare_record" "builds-terrible-systems-MX" {
   type     = "MX"
   ttl      = 1
 }
+
+resource "cloudflare_record" "f-terrible-systems-CNAME" {
+  domain = "terrible.systems"
+  name   = "f"
+  value  = "f-terrible-systems.s3-website-us-east-1.amazonaws.com"
+  type   = "CNAME"
+}

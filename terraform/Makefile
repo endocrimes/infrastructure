@@ -13,7 +13,7 @@ plan:
 	@echo "=> Planning"
 	@terraform plan -out terraform.plan.old
 
-terraform.plan.old: **/*.tf
+terraform.plan.old: *.tf
 	@make plan
 
 .PHONY: apply
