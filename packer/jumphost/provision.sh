@@ -25,6 +25,7 @@ touch ${HOME}/.ssh/authorized_keys
 
 cat <<SSHCONFIG > /etc/ssh/sshd_config
 Port 443
+Port 1443
 AllowAgentForwarding yes
 AllowTCPForwarding yes
 PrintMotd no
