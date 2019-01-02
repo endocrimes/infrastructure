@@ -1,0 +1,21 @@
+version: 2.1
+
+workflows:
+  terraform:
+    jobs:
+      - lint-terraform
+
+executors:
+  terraform:
+    docker:
+      - image: hashicorp/terraform:light
+
+jobs:
+  lint-terraform:
+    executor: terraform
+    working_directory: ~/project/terraform
+    steps:
+      - checkout:
+          path: ~/project
+      - run: terraform init
+      - run: terraform fmt -check=true -diff=true
