@@ -19,7 +19,7 @@ resource "cloudflare_record" "whereami-dokku-2gb-lon1-01-terrible-systems-A" {
 resource "cloudflare_record" "jump-terrible-systems-A" {
   domain  = "terrible.systems"
   name    = "jump"
-  value   = "207.154.213.220"
+  value   = "${scaleway_ip.jumphost.ip}"
   type    = "A"
   ttl     = 1
   proxied = false
@@ -44,8 +44,9 @@ resource "cloudflare_record" "builds-terrible-systems-MX" {
 }
 
 resource "cloudflare_record" "f-terrible-systems-CNAME" {
-  domain = "terrible.systems"
-  name   = "f"
-  value  = "f-terrible-systems.s3-website-us-east-1.amazonaws.com"
-  type   = "CNAME"
+  domain  = "terrible.systems"
+  name    = "f"
+  value   = "d33bpx43z5gzmt.cloudfront.net"
+  type    = "CNAME"
+  proxied = true
 }

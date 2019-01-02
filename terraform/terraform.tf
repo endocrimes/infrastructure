@@ -13,3 +13,9 @@ provider "cloudflare" {
   email = "${var.cloudflare_email}"
   token = "${var.cloudflare_token}"
 }
+
+provider "scaleway" {
+  organization = "${var.scaleway_organization_id}"
+  token        = "${var.scaleway_token}"
+  region       = "${var.scaleway_region}"
+}

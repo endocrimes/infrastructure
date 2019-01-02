@@ -1,0 +1,22 @@
+{
+  "variables": {
+    "scaleway_tag": "HASHISTACK",
+    "scaleway_region": "par1",
+    "scaleway_image": "d4067cdc-dc9d-4810-8a26-0dae51d7df42"
+  },
+  "builders": [
+    {
+      "type": "scaleway",
+      "image": "{{user `scaleway_image`}}",
+      "region": "{{user `scaleway_region`}}",
+      "commercial_type": "Start1-S",
+      "ssh_username": "root"
+    }
+  ],
+  "provisioners": [
+    {
+      "script": "provision.sh",
+      "type": "shell"
+    }
+  ]
+}
