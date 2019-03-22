@@ -8,6 +8,7 @@ resource "scaleway_server" "jumphost" {
   type  = "START1-S"
 
   security_group = "${scaleway_security_group.ssh.id}"
+  enable_ipv6    = true
 }
 
 resource "scaleway_security_group" "ssh" {
