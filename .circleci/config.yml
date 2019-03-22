@@ -3,19 +3,58 @@ version: 2.1
 workflows:
   terraform:
     jobs:
-      - lint-terraform
+      - tf-lint
+      - tf-plan:
+          requires:
+            - tf-lint
+      - approve-plan:
+          type: approval
+          requires:
+            - tf-plan
+          filters:
+            branches:
+              only: master
+      - tf-apply:
+          requires:
+            - approve-plan
 
 executors:
-  terraform:
+  terraform-light:
+    working_directory: ~/project/terraform
     docker:
       - image: hashicorp/terraform:light
+  terraform-heavy:
+    working_directory: ~/project/terraform
+    docker:
+      - image: hashicorp/terraform:full
 
 jobs:
-  lint-terraform:
-    executor: terraform
-    working_directory: ~/project/terraform
+  tf-lint:
+    executor: terraform-light
     steps:
       - checkout:
           path: ~/project
       - run: terraform init
       - run: terraform fmt -check=true -diff=true
+
+  tf-plan:
+    executor: terraform-heavy
+    steps:
+      - checkout:
+          path: ~/project
+      - run: terraform init
+      - run: terraform plan -out=./terraform.plan
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - terraform.plan
+
+  tf-apply:
+    executor: terraform-heavy
+    steps:
+      - checkout:
+          path: ~/project
+      - attach_workspace:
+          at: ./
+      - run: terraform init
+      - run: terraform apply --auto-approve ./terraform.plan
