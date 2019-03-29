@@ -50,3 +50,21 @@ resource "cloudflare_record" "f-terrible-systems-CNAME" {
   type    = "CNAME"
   proxied = true
 }
+
+resource "cloudflare_record" "www-dani-builds-terrible-systems-CNAME" {
+  domain  = "terrible.systems"
+  name    = "www.dani.builds"
+  value   = "stupefied-beaver-85c4a0.netlify.com"
+  type    = "CNAME"
+  ttl     = 120
+  proxied = false
+}
+
+resource "cloudflare_record" "dani-builds-terrible-systems-CNAME" {
+  domain  = "terrible.systems"
+  name    = "dani.builds"
+  value   = "stupefied-beaver-85c4a0.netlify.com"
+  type    = "CNAME"
+  ttl     = 120
+  proxied = false
+}
