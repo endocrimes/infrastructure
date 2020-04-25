@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.11.0"
+  required_version = "~> 0.12.0"
 
   backend "s3" {
     key     = "personal.infra.tfstate"
@@ -12,5 +12,7 @@ terraform {
 provider "cloudflare" {}
 
 provider "scaleway" {
-  region = "par1"
+  region  = "fr-par"
+  zone    = "fr-par-1"
+  version = "~> 1.11"
 }
