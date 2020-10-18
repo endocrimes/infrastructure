@@ -20,11 +20,11 @@ workflows:
 
 executors:
   terraform-light:
-    working_directory: ~/project/terraform
+    working_directory: ~/project/terraform/base
     docker:
       - image: hashicorp/terraform:light
   terraform-heavy:
-    working_directory: ~/project/terraform
+    working_directory: ~/project/terraform/base
     docker:
       - image: hashicorp/terraform:full
 
