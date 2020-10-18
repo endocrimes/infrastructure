@@ -7,9 +7,9 @@ terraform {
   }
 }
 
-provider "cloudflare" {}
+provider "cloudflare/cloudflare" {}
 
-provider "scaleway" {
+provider "scaleway/scaleway" {
   region  = "fr-par"
   zone    = "fr-par-1"
   version = "~> 1.11"
