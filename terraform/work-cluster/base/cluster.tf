@@ -1,3 +1,4 @@
+data "google_project" "project" {}
 
 resource "google_container_cluster" "primary" {
   name     = "work-cluster"
@@ -9,10 +10,12 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
-  autoscaling_profile = "OPTIMIZE_UTILIZATION"
-
   workload_identity_config {
     workload_pool = "${data.google_project.project.project_id}.svc.id.goog"
+  }
+
+  workload_metadata_config {
+    mode = "GKE_METADATA"
   }
 
   release_channel {
