@@ -11,6 +11,10 @@ resource "google_container_cluster" "primary" {
 
   autoscaling_profile = "OPTIMIZE_UTILIZATION"
 
+  workload_identity_config {
+    workload_pool = "${data.google_project.project.project_id}.svc.id.goog"
+  }
+
   release_channel {
     channel = "RAPID"
   }
