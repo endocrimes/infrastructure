@@ -23,3 +23,6 @@ spec:
       "gcp01.work.terrible.systems"
     ]
     google.project: "dlancashire-k8s-dev"
+    serviceAccount.annotations:
+      iam.gke.io/gke-metadata-server-enabled: "true"
+
