@@ -1,78 +1,87 @@
-data "cloudflare_zones" "terrible_systems" {
-  filter {
-    name   = "terrible.systems"
-    status = "active"
-    paused = false
-  }
+resource "dnsimple_zone_record" "www-dani-builds-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name    = "www.dani.builds"
+  value   = "danielle-lancashire.ghost.io"
+  type    = "CNAME"
+  ttl     = 3600
 }
 
-resource "cloudflare_record" "dokku-2gb-lon1-01-terrible-systems-A" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "dokku-2gb-lon1-01"
-  value   = "139.59.200.225"
-  type    = "A"
-  ttl     = 1
-  proxied = false
+resource "dnsimple_zone_record" "dani-builds-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name    = "dani.builds"
+  value   = "danielle-lancashire.ghost.io"
+  type    = "CNAME"
+  ttl     = 3600
 }
 
-resource "cloudflare_record" "whereami-dokku-2gb-lon1-01-terrible-systems-A" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "whereami.dokku-2gb-lon1-01"
-  value   = "139.59.200.225"
-  type    = "A"
-  ttl     = 1
-  proxied = true
+resource "dnsimple_zone_record" "nixcache-infra-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name    = "nixcache.infra"
+  value   = "home.hormonal.party"
+  type    = "CNAME"
+  ttl     = 3600
 }
 
-resource "cloudflare_record" "jump-terrible-systems-A" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "jump"
-  value   = scaleway_ip.jumphost.ip
-  type    = "A"
-  ttl     = 1
-  proxied = false
+resource "dnsimple_zone_record" "plex-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name    = "plex"
+  value   = "home.hormonal.party"
+  type    = "CNAME"
+  ttl     = 3600
 }
 
-resource "cloudflare_record" "terrible-systems-MX" {
-  zone_id  = data.cloudflare_zones.terrible_systems.zones[0].id
+resource "dnsimple_zone_record" "terrible-systems-MX" {
+  zone_name = "terrible.systems"
   name     = "terrible.systems"
   value    = "in1-smtp.messagingengine.com"
   priority = 10
   type     = "MX"
-  ttl      = 1
+  ttl      = 3600
 }
 
-resource "cloudflare_record" "builds-terrible-systems-MX" {
-  zone_id  = data.cloudflare_zones.terrible_systems.zones[0].id
+resource "dnsimple_zone_record" "builds-terrible-systems-MX" {
+  zone_name = "terrible.systems"
   name     = "builds"
   value    = "in1-smtp.messagingengine.com"
   priority = 10
   type     = "MX"
-  ttl      = 1
+  ttl      = 3600
 }
 
-resource "cloudflare_record" "f-terrible-systems-CNAME" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "f"
-  value   = "d33bpx43z5gzmt.cloudfront.net"
-  type    = "CNAME"
-  proxied = true
+locals {
+  dkim_records = [
+    { key = "fm1._domainkey.builds", value = "fm1.builds.terrible.systems.dkim.fmhosted.com" },
+    { key = "fm2._domainkey.builds", value = "fm2.builds.terrible.systems.dkim.fmhosted.com" },
+    { key = "fm3._domainkey.builds", value = "fm3.builds.terrible.systems.dkim.fmhosted.com" },
+    { key = "fm1._domainkey", value = "fm1.terrible.systems.dkim.fmhosted.com" },
+    { key = "fm2._domainkey", value = "fm2.terrible.systems.dkim.fmhosted.com" },
+    { key = "fm3._domainkey", value = "fm3.terrible.systems.dkim.fmhosted.com" },
+  ]
 }
 
-resource "cloudflare_record" "www-dani-builds-terrible-systems-CNAME" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "www.dani.builds"
-  value   = "stupefied-beaver-85c4a0.netlify.com"
+resource "dnsimple_zone_record" "terrible-systems-dkim-CNAME" {
+  for_each = { for record in local.dkim_records : record.key => record }
+
+  zone_name = "terrible.systems"
+  name    = each.value.key
+  value = each.value.value
   type    = "CNAME"
-  ttl     = 120
-  proxied = false
+  ttl     = 3600
 }
 
-resource "cloudflare_record" "dani-builds-terrible-systems-CNAME" {
-  zone_id = data.cloudflare_zones.terrible_systems.zones[0].id
-  name    = "dani.builds"
-  value   = "stupefied-beaver-85c4a0.netlify.com"
-  type    = "CNAME"
-  ttl     = 120
-  proxied = false
+
+resource "dnsimple_zone_record" "terrible-systems-spf-TXT" {
+  zone_name = "terrible.systems"
+  name    = "terrible.systems"
+  value = "v=spf1 include:spf.messagingengine.com ?all"
+  type    = "TXT"
+  ttl     = 3600
+}
+
+resource "dnsimple_zone_record" "builds-terrible-systems-spf-TXT" {
+  zone_name = "terrible.systems"
+  name    = "builds"
+  value = "v=spf1 include:spf.messagingengine.com ?all"
+  type    = "TXT"
+  ttl     = 3600
 }

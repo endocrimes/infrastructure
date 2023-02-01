@@ -1,26 +1,29 @@
 terraform {
-  backend "s3" {
-    key     = "personal.infra.tfstate"
-    bucket  = "dantoml-tf-state"
-    region  = "us-east-1"
-    profile = "personal"
+  cloud {
+    organization = "endocrimes"
+
+    workspaces {
+      name = "infrastructure"
+    }
   }
 
   required_providers {
-    scaleway = {
-      source = "scaleway/scaleway"
-    }
-
-    cloudflare = {
-      source = "cloudflare/cloudflare"
+    dnsimple = {
+      source  = "dnsimple/dnsimple"
+      version = "~> 0.14.0"
     }
   }
 }
 
-provider "cloudflare" {}
+variable "dnsimple_token" {
+  type = string
+}
 
-provider "scaleway" {
-  region  = "fr-par"
-  zone    = "fr-par-1"
-  version = "~> 1.11"
+variable "dnsimple_account" {
+  type = string
+}
+
+provider "dnsimple" {
+  token   = var.dnsimple_token
+  account = var.dnsimple_account
 }
