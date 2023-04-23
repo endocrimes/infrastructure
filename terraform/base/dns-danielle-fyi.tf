@@ -1,7 +1,7 @@
 resource "dnsimple_zone_record" "recipies-danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name    = "recipies"
-  value   = "178.63.8.90"
+  value   = "65.108.68.203"
   type    = "A"
   ttl     = 60
 }
@@ -9,7 +9,7 @@ resource "dnsimple_zone_record" "recipies-danielle-fyi-A" {
 resource "dnsimple_zone_record" "recipes-danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name    = "recipes"
-  value   = "178.63.8.90"
+  value   = "65.108.68.203"
   type    = "A"
   ttl     = 60
 }
