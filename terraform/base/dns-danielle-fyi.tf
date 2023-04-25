@@ -44,3 +44,11 @@ resource "dnsimple_zone_record" "www-danielle-fyi-CNAME" {
   type      = "CNAME"
   ttl       = 3600
 }
+
+resource "dnsimple_zone_record" "atproto-danielle-fyi-TXT" {
+  zone_name = "danielle.fyi"
+  name      = "_atproto"
+  value     = "did=did:plc:ah6drwds5srb4lx33ihfrpk3"
+  type      = "TXT"
+  ttl       = 3600
+}
