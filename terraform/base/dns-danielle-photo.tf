@@ -7,10 +7,10 @@ resource "dnsimple_zone_record" "danielle-photo-A" {
   ])
 
   zone_name = "danielle.photo"
-  name    = ""
-  value   = each.value
-  type    = "A"
-  ttl     = 60
+  name      = ""
+  value     = each.value
+  type      = "A"
+  ttl       = 60
 }
 
 resource "dnsimple_zone_record" "danielle-photo-squarespace-CNAME" {

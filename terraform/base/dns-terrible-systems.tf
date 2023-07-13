@@ -1,51 +1,51 @@
 resource "dnsimple_zone_record" "www-dani-builds-terrible-systems-CNAME" {
   zone_name = "terrible.systems"
-  name    = "www.dani.builds"
-  value   = "danielle-lancashire.ghost.io"
-  type    = "CNAME"
-  ttl     = 3600
+  name      = "www.dani.builds"
+  value     = "danielle-lancashire.ghost.io"
+  type      = "CNAME"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "dani-builds-terrible-systems-CNAME" {
   zone_name = "terrible.systems"
-  name    = "dani.builds"
-  value   = "danielle-lancashire.ghost.io"
-  type    = "CNAME"
-  ttl     = 3600
+  name      = "dani.builds"
+  value     = "danielle-lancashire.ghost.io"
+  type      = "CNAME"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "nixcache-infra-terrible-systems-CNAME" {
   zone_name = "terrible.systems"
-  name    = "nixcache.infra"
-  value   = "home.hormonal.party"
-  type    = "CNAME"
-  ttl     = 3600
+  name      = "nixcache.infra"
+  value     = "home.hormonal.party"
+  type      = "CNAME"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "plex-terrible-systems-CNAME" {
   zone_name = "terrible.systems"
-  name    = "plex"
-  value   = "home.hormonal.party"
-  type    = "CNAME"
-  ttl     = 3600
+  name      = "plex"
+  value     = "home.hormonal.party"
+  type      = "CNAME"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "terrible-systems-MX" {
   zone_name = "terrible.systems"
-  name     = "terrible.systems"
-  value    = "in1-smtp.messagingengine.com"
-  priority = 10
-  type     = "MX"
-  ttl      = 3600
+  name      = "terrible.systems"
+  value     = "in1-smtp.messagingengine.com"
+  priority  = 10
+  type      = "MX"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "builds-terrible-systems-MX" {
   zone_name = "terrible.systems"
-  name     = "builds"
-  value    = "in1-smtp.messagingengine.com"
-  priority = 10
-  type     = "MX"
-  ttl      = 3600
+  name      = "builds"
+  value     = "in1-smtp.messagingengine.com"
+  priority  = 10
+  type      = "MX"
+  ttl       = 3600
 }
 
 locals {
@@ -63,25 +63,44 @@ resource "dnsimple_zone_record" "terrible-systems-dkim-CNAME" {
   for_each = { for record in local.dkim_records : record.key => record }
 
   zone_name = "terrible.systems"
-  name    = each.value.key
-  value = each.value.value
-  type    = "CNAME"
-  ttl     = 3600
+  name      = each.value.key
+  value     = each.value.value
+  type      = "CNAME"
+  ttl       = 3600
 }
 
 
 resource "dnsimple_zone_record" "terrible-systems-spf-TXT" {
   zone_name = "terrible.systems"
-  name    = "terrible.systems"
-  value = "v=spf1 include:spf.messagingengine.com ?all"
-  type    = "TXT"
-  ttl     = 3600
+  name      = "terrible.systems"
+  value     = "v=spf1 include:spf.messagingengine.com ?all"
+  type      = "TXT"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "builds-terrible-systems-spf-TXT" {
   zone_name = "terrible.systems"
-  name    = "builds"
-  value = "v=spf1 include:spf.messagingengine.com ?all"
-  type    = "TXT"
-  ttl     = 3600
+  name      = "builds"
+  value     = "v=spf1 include:spf.messagingengine.com ?all"
+  type      = "TXT"
+  ttl       = 3600
+}
+
+locals {
+  ns1_nameservers = [
+    "dns1.p05.nsone.net",
+    "dns2.p05.nsone.net",
+    "dns3.p05.nsone.net",
+    "dns4.p05.nsone.net",
+  ]
+}
+
+resource "dnsimple_zone_record" "fermyhacks-terrible-systems-NS" {
+  for_each = { for record in local.ns1_nameservers : record => record }
+
+  zone_name = "terrible.systems"
+  name      = "fermyhacks"
+  value     = each.key
+  type      = "NS"
+  ttl       = 3600
 }
