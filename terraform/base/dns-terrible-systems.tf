@@ -22,6 +22,22 @@ resource "dnsimple_zone_record" "nixcache-infra-terrible-systems-CNAME" {
   ttl       = 3600
 }
 
+resource "dnsimple_zone_record" "social-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name      = "social"
+  value     = "vip.masto.host"
+  type      = "CNAME"
+  ttl       = 3600
+}
+
+resource "dnsimple_zone_record" "socially-terrible-systems-CNAME" {
+  zone_name = "terrible.systems"
+  name      = "socially"
+  value     = "vip.masto.host"
+  type      = "CNAME"
+  ttl       = 3600
+}
+
 resource "dnsimple_zone_record" "plex-terrible-systems-CNAME" {
   zone_name = "terrible.systems"
   name      = "plex"
@@ -100,6 +116,16 @@ resource "dnsimple_zone_record" "fermyhacks-terrible-systems-NS" {
 
   zone_name = "terrible.systems"
   name      = "fermyhacks"
+  value     = each.key
+  type      = "NS"
+  ttl       = 3600
+}
+
+resource "dnsimple_zone_record" "todo-terrible-systems-NS" {
+  for_each = { for record in local.ns1_nameservers : record => record }
+
+  zone_name = "terrible.systems"
+  name      = "todo"
   value     = each.key
   type      = "NS"
   ttl       = 3600

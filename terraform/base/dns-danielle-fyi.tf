@@ -31,6 +31,24 @@ resource "dnsimple_zone_record" "recipes-danielle-fyi-A" {
   ttl       = 60
 }
 
+resource "dnsimple_zone_record" "turso-danielle-fyi-A" {
+  zone_name = "danielle.fyi"
+  name      = "turso"
+  value     = "65.108.68.203"
+  type      = "A"
+  ttl       = 60
+}
+
+resource "dnsimple_zone_record" "hello-civo-danielle-fyi-A" {
+  zone_name = "danielle.fyi"
+  name      = "hello-civo"
+  value     = "a7a43f9a-c0f6-4a44-ab97-f35b2217a96e.k8s.civo.com"
+  type      = "CNAME"
+  ttl       = 60
+}
+
+
+
 resource "dnsimple_zone_record" "micro-danielle-fyi-A" {
   for_each = toset([
     "104.200.22.214",
@@ -41,6 +59,16 @@ resource "dnsimple_zone_record" "micro-danielle-fyi-A" {
   value     = each.value
   type      = "A"
   ttl       = 60
+}
+
+resource "dnsimple_zone_record" "links-danielle-fyi-A" {
+  for_each = toset(local.ns1_nameservers)
+
+  zone_name = "danielle.fyi"
+  name      = "links"
+  value     = each.value
+  type      = "NS"
+  ttl       = 3600
 }
 
 resource "dnsimple_zone_record" "atproto-danielle-fyi-TXT" {
