@@ -1,3 +1,20 @@
+resource "dnsimple_zone_record" "www-danielle-fyi-CNAME" {
+  zone_name = "danielle.fyi"
+  name      = "www."
+  value     = "danielle-lancashire.ghost.io"
+  type      = "CNAME"
+  ttl       = 3600
+}
+
+resource "dnsimple_zone_record" "danielle-fyi-A" {
+  zone_name = "danielle.fyi"
+  name      = "@"
+  value     = "178.128.137.126"
+  type      = "A"
+  ttl       = 3600
+}
+
+
 resource "dnsimple_zone_record" "recipies-danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name      = "recipies"
