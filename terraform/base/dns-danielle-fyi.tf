@@ -1,19 +1,34 @@
-resource "dnsimple_zone_record" "www-danielle-fyi-CNAME" {
-  zone_name = "danielle.fyi"
-  name      = "www."
-  value     = "danielle-lancashire.ghost.io"
-  type      = "CNAME"
-  ttl       = 3600
-}
-
 resource "dnsimple_zone_record" "danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name      = "@"
-  value     = "178.128.137.126"
+  value     = "66.241.124.174"
   type      = "A"
   ttl       = 3600
 }
 
+resource "dnsimple_zone_record" "www-danielle-fyi-A" {
+  zone_name = "danielle.fyi"
+  name      = "www"
+  value     = "66.241.124.174"
+  type      = "A"
+  ttl       = 3600
+}
+
+resource "dnsimple_zone_record" "danielle-fyi-AAAA" {
+  zone_name = "danielle.fyi"
+  name      = "@"
+  value     = "66.241.124.174"
+  type      = "AAAA"
+  ttl       = 3600
+}
+
+resource "dnsimple_zone_record" "www-danielle-fyi-AAAA" {
+  zone_name = "danielle.fyi"
+  name      = "www"
+  value     = "66.241.124.174"
+  type      = "A"
+  ttl       = 3600
+}
 
 resource "dnsimple_zone_record" "recipies-danielle-fyi-A" {
   zone_name = "danielle.fyi"
@@ -26,15 +41,15 @@ resource "dnsimple_zone_record" "recipies-danielle-fyi-A" {
 resource "dnsimple_zone_record" "recipes-danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name      = "recipes"
-  value     = "65.108.68.203"
-  type      = "A"
+  value     = "2a09:8280:1::bd:d663:0"
+  type      = "AAAA"
   ttl       = 60
 }
 
 resource "dnsimple_zone_record" "turso-danielle-fyi-A" {
   zone_name = "danielle.fyi"
   name      = "turso"
-  value     = "65.108.68.203"
+  value     = "2a09:8280:1::bd:d663:0"
   type      = "A"
   ttl       = 60
 }
